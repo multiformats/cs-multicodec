@@ -1,0 +1,14 @@
+language: csharp
+solution: Multiformats.Codec.sln
+branches:
+  only:
+    - master
+install:
+  - nuget restore Multiformats.Codec/packages.config -PackagesDirectory ./packages
+  - nuget restore Multiformats.Codec.Tests/packages.config -PackagesDirectory ./packages
+script:
+  - xbuild /p:Configuration=Release Multiformats.Codec.sln
+  - mono ./packages/NUnit.ConsoleRunner.3.5.0/tools/nunit3-console.exe ./Multiformats.Codec.Tests/bin/Release/Multiformats.Codec.Tests.dll
+cache:
+  - directories:
+    - ./packages
