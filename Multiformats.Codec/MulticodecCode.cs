@@ -2,28 +2,111 @@ namespace Multiformats.Codec
 {
     public enum MulticodecCode : ulong
     {
+        // misc
         [StringValue("<Unknown Multicodec>")]
         Unknown = 0,
-        [StringValue("git")]
-        Git = 0x69,
-        [StringValue("dag-pb")]
-        DagProtobuf = 0x70,
-        [StringValue("dag-cbor")]
-        DagCBOR = 0x71,
         [StringValue("bin")]
         Raw = 0x55,
 
+        // bases
+        Base1 = 0x01,
+        Base2 = Raw,
+        Base8 = 0x07,
+        Base10 = 0x09,
+        Base16,
+        Base32,
+        Base32Hex,
+        Base58Flickr,
+        [StringValue("base58btc")]
+        Base58BitCoin,
+        Base64,
+        Base64Url,
+
+        // serialization
+        CBOR,
+        [StringValue("bjson")]
+        BinaryJson,
+        [StringValue("ubjson")]
+        UniversalBinaryJson,
+        [StringValue("protobuf")]
+        ProtolBuffers,
+        [StringValue("capnp")]
+        CapnProto,
+        [StringValue("flatbuf")]
+        FlatBuffers,
+        RLP = 0x60,
+
+        // multiformats
+        [StringValue("multicodec")]
+        Multicodec = 0x30,
+        [StringValue("multihash")]
+        Multihash = 0x31,
+        [StringValue("multiaddr")]
+        Multiaddress = 0x32,
+        [StringValue("multibase")]
+        Multibase = 0x33,
+
+        // multihashes
+
+        // multiaddrs
+        IP4 = 0x04,
+        IP6 = 0x29,
+        TCP = 0x06,
+        UDP = 0x0111,
+        DCCP = 0x21,
+        SCTP = 0x84,
+        UDT = 0x012D,
+        UTP = 0x012E,
+        IPFS = 0x2A,
+        HTTP = 0x01E0,
+        HTTPS = 0x01BB,
+        WS = 0x01DD,
+        ONION = 0x01BC,
+
+        // archiving
+        Tar,
+        Zip,
+
+        // imaging
+        Png,
+        Jpg,
+
+        // video
+        Mp4,
+        Mkv,
+
+        // IPLD
+        [StringValue("git")]
+        Git = 0x69,
+        [StringValue("dag-pb")]
+        MerkleDAGProtobuf = 0x70,
+        [StringValue("dag-cbor")]
+        MerkleDAGCBOR = 0x71,
         [StringValue("eth-block")]
         EthereumBlock = 0x90,
+        [StringValue("eth-block-list")]
+        EthereumBlockList = 0x91,
+        [StringValue("eth-tx-trie")]
+        EthereumTransactionTrie = 0x92,
         [StringValue("eth-tx")]
-        EthereumTx = 0x91,
+        EthereumTransaction = 0x93,
+        [StringValue("eth-tx-receipt-trie")]
+        EthereumTransactionReceiptTrie = 0x94,
+        [StringValue("eth-tx-receipt")]
+        EthereumTransactionReceipt = 0x95,
+        [StringValue("eth-state-trie")]
+        EthereumStateTrie = 0x96,
+        [StringValue("eth-account-snapshot")]
+        EthereumAccountSnapshot = 0x97,
+        [StringValue("eth-storage-trie")]
+        EthereumStorageTrie = 0x98,
         [StringValue("bitcoin-block")]
         BitcoinBlock = 0xb0,
         [StringValue("bitcoin-tx")]
-        BitcoinTx = 0xb1,
+        BitcoinTransaction = 0xb1,
         [StringValue("zcash-block")]
         ZcashBlock = 0xc0,
         [StringValue("zcash-tx")]
-        ZcashTx = 0xc1,
+        ZcashTransaction = 0xc1,
     }
 }

@@ -14,7 +14,7 @@ namespace Multiformats.Codec
                     return attr.Value;
             }
 
-            return code.ToString();
+            return code.ToString().ToLower();
         }
     }
 }

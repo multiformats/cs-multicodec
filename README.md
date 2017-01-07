@@ -12,7 +12,7 @@
 
 - [Install](#install)
 - [Usage](#usage)
-- [Supported hash algorithms](#supported-hash-algorithms)
+- [Supported codecs](#supported-codecs)
 - [License](#license)
 
 ## Install

@@ -12,15 +12,15 @@ namespace Multiformats.Codec.Tests
     {
         [TestCase(MulticodecCode.Unknown, "<Unknown Multicodec>")]
         [TestCase(MulticodecCode.Git, "git")]
-        [TestCase(MulticodecCode.DagProtobuf, "dag-pb")]
-        [TestCase(MulticodecCode.DagCBOR, "dag-cbor")]
+        [TestCase(MulticodecCode.MerkleDAGProtobuf, "dag-pb")]
+        [TestCase(MulticodecCode.MerkleDAGCBOR, "dag-cbor")]
         [TestCase(MulticodecCode.Raw, "bin")]
         [TestCase(MulticodecCode.EthereumBlock, "eth-block")]
-        [TestCase(MulticodecCode.EthereumTx, "eth-tx")]
+        [TestCase(MulticodecCode.EthereumTransaction, "eth-tx")]
         [TestCase(MulticodecCode.BitcoinBlock, "bitcoin-block")]
-        [TestCase(MulticodecCode.BitcoinTx, "bitcoin-tx")]
+        [TestCase(MulticodecCode.BitcoinTransaction, "bitcoin-tx")]
         [TestCase(MulticodecCode.ZcashBlock, "zcash-block")]
-        [TestCase(MulticodecCode.ZcashTx, "zcash-tx")]
+        [TestCase(MulticodecCode.ZcashTransaction, "zcash-tx")]
         public void CanGetStringValuOfCode(MulticodecCode code, string expected)
         {
             Assert.That(code.GetString(), Is.EqualTo(expected));
@@ -28,30 +28,30 @@ namespace Multiformats.Codec.Tests
         
         [TestCase(0UL, MulticodecCode.Unknown)]
         [TestCase(0x69UL, MulticodecCode.Git)]
-        [TestCase(0x70UL, MulticodecCode.DagProtobuf)]
-        [TestCase(0x71UL, MulticodecCode.DagCBOR)]
+        [TestCase(0x70UL, MulticodecCode.MerkleDAGProtobuf)]
+        [TestCase(0x71UL, MulticodecCode.MerkleDAGCBOR)]
         [TestCase(0x55UL, MulticodecCode.Raw)]
         [TestCase(0x90UL, MulticodecCode.EthereumBlock)]
-        [TestCase(0x91UL, MulticodecCode.EthereumTx)]
+        [TestCase(0x93UL, MulticodecCode.EthereumTransaction)]
         [TestCase(0xb0UL, MulticodecCode.BitcoinBlock)]
-        [TestCase(0xb1UL, MulticodecCode.BitcoinTx)]
+        [TestCase(0xb1UL, MulticodecCode.BitcoinTransaction)]
         [TestCase(0xc0UL, MulticodecCode.ZcashBlock)]
-        [TestCase(0xc1UL, MulticodecCode.ZcashTx)]
+        [TestCase(0xc1UL, MulticodecCode.ZcashTransaction)]
         public void CanGetCorrectEnumFromNumber(ulong n, MulticodecCode expected)
         {
             Assert.That((MulticodecCode)n, Is.EqualTo(expected));
         }
 
         [TestCase(MulticodecCode.Git)]
-        [TestCase(MulticodecCode.DagProtobuf)]
-        [TestCase(MulticodecCode.DagCBOR)]
+        [TestCase(MulticodecCode.MerkleDAGProtobuf)]
+        [TestCase(MulticodecCode.MerkleDAGCBOR)]
         [TestCase(MulticodecCode.Raw)]
         [TestCase(MulticodecCode.EthereumBlock)]
-        [TestCase(MulticodecCode.EthereumTx)]
+        [TestCase(MulticodecCode.EthereumTransaction)]
         [TestCase(MulticodecCode.BitcoinBlock)]
-        [TestCase(MulticodecCode.BitcoinTx)]
+        [TestCase(MulticodecCode.BitcoinTransaction)]
         [TestCase(MulticodecCode.ZcashBlock)]
-        [TestCase(MulticodecCode.ZcashTx)]
+        [TestCase(MulticodecCode.ZcashTransaction)]
         public void RoundTrip(MulticodecCode code)
         {
             var data = Encoding.UTF8.GetBytes("Hello World");
