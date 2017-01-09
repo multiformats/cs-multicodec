@@ -10,7 +10,7 @@ namespace Multiformats.Codec
 
         // bases
         Base1 = 0x01,
-        Base2 = Raw,
+        //Base2 = Raw,
         Base8 = 0x07,
         Base10 = 0x09,
         Base16,
