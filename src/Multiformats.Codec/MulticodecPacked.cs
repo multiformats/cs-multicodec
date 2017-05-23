@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using BinaryEncoding;
 
 namespace Multiformats.Codec
@@ -11,7 +12,10 @@ namespace Multiformats.Codec
                 return MulticodecCode.Unknown;
 
             ulong code;
-            Binary.Varint.Read(data, offset, out code);
+            var n = Binary.Varint.Read(data, offset, out code);
+            if (n == 0 || !Enum.IsDefined(typeof(MulticodecCode), code))
+                return MulticodecCode.Unknown;
+
             return (MulticodecCode) code;
         }
 

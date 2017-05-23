@@ -5,11 +5,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Multiformats.Codec.Codecs;
-using NUnit.Framework;
+using Xunit;
 
 namespace Multiformats.Codec.Tests
 {
-    [TestFixture]
     public class MulticodecTests
     {
         [Serializable, ProtoBuf.ProtoContract]
@@ -51,7 +50,7 @@ namespace Multiformats.Codec.Tests
                 result = codec.Decoder(stream).Decode<TestClass>();
             }
 
-            Assert.That(result, Is.EqualTo(test));
+            Assert.Equal(result, test);
         }
 
         private async Task MulticodecRoundTripAsync(ICodec codec)
@@ -71,43 +70,43 @@ namespace Multiformats.Codec.Tests
                 result = await codec.Decoder(stream).DecodeAsync<TestClass>(CancellationToken.None);
             }
 
-            Assert.That(result, Is.EqualTo(test));
+            Assert.Equal(result, test);
         }
 
-        [Test]
+        [Fact]
         public void JsonMulticodecWithMsgIoRoundTrip() => MulticodecRoundTrip(JsonCodec.CreateMulticodec(true));
 
-        [Test]
+        [Fact]
         public void JsonCodecWithMsgIoRoundTrip() => MulticodecRoundTrip(JsonCodec.CreateCodec(true));
 
-        [Test]
+        [Fact]
         public void JsonMulticodecWithoutMsgIoRoundTrip() => MulticodecRoundTrip(JsonCodec.CreateMulticodec(false));
 
-        [Test]
+        [Fact]
         public void JsonCodecWithoutMsgIoRoundTrip() => MulticodecRoundTrip(JsonCodec.CreateCodec(false));
 
-        [Test]
+        [Fact]
         public void CBORMulticodecRoundTrip() => MulticodecRoundTrip(CborCodec.CreateMulticodec());
 
-        [Test]
+        [Fact]
         public void CBORCodecRoundTrip() => MulticodecRoundTrip(CborCodec.CreateCodec());
 
-        [Test]
+        [Fact]
         public Task JsonMulticodecWithMsgIoRoundTrip_Async() => MulticodecRoundTripAsync(JsonCodec.CreateMulticodec(true));
 
-        [Test]
+        [Fact]
         public Task JsonCodecWithMsgIoRoundTrip_Async() => MulticodecRoundTripAsync(JsonCodec.CreateCodec(true));
 
-        [Test]
+        [Fact]
         public Task JsonMulticodecWithoutMsgIoRoundTrip_Async() => MulticodecRoundTripAsync(JsonCodec.CreateMulticodec(false));
 
-        [Test]
+        [Fact]
         public Task JsonCodecWithoutMsgIoRoundTrip_Async() => MulticodecRoundTripAsync(JsonCodec.CreateCodec(false));
 
-        [Test]
+        [Fact]
         public Task CBORMulticodecRoundTrip_Async() => MulticodecRoundTripAsync(CborCodec.CreateMulticodec());
 
-        [Test]
+        [Fact]
         public Task CBORCodecRoundTrip_Async() => MulticodecRoundTripAsync(CborCodec.CreateCodec());
 
 
@@ -134,7 +133,7 @@ namespace Multiformats.Codec.Tests
                     results.Add(dec.Decode<TestClass>());
             }
 
-            Assert.That(results.ToArray(), Is.EqualTo(tests));
+            Assert.Equal(results.ToArray(), tests);
         }
 
         private async Task MulticodecRoundTripManyAsync(ICodec codec, int count = 1000)
@@ -160,7 +159,7 @@ namespace Multiformats.Codec.Tests
                     results.Add(await dec.DecodeAsync<TestClass>(CancellationToken.None));
             }
 
-            Assert.That(results.ToArray(), Is.EqualTo(tests));
+            Assert.Equal(results.ToArray(), tests);
         }
 
         private void MsgIoRoundTripMany(MsgIoCodec codec)
@@ -188,7 +187,7 @@ namespace Multiformats.Codec.Tests
                     results.Add(dec.Decode<byte[]>());
             }
 
-            Assert.That(results.ToArray(), Is.EqualTo(tests));
+            Assert.Equal(results.ToArray(), tests);
         }
 
         private async Task MsgIoRoundTripManyAsync(MsgIoCodec codec)
@@ -216,80 +215,80 @@ namespace Multiformats.Codec.Tests
                     results.Add(await dec.DecodeAsync<byte[]>(CancellationToken.None));
             }
 
-            Assert.That(results.ToArray(), Is.EqualTo(tests));
+            Assert.Equal(results.ToArray(), tests);
         }
 
-        [Test]
+        [Fact]
         public void JsonMulticodecWithMsgIoRoundTripMany() => MulticodecRoundTripMany(JsonCodec.CreateMulticodec(true));
 
-        [Test]
+        [Fact]
         public void JsonCodecWithMsgIoRoundTripMany() => MulticodecRoundTripMany(JsonCodec.CreateCodec(true));
 
-        [Test]
+        [Fact]
         public void JsonMulticodecWithoutMsgIoRoundTripMany() => MulticodecRoundTripMany(JsonCodec.CreateMulticodec(false));
 
-        [Test]
+        [Fact]
         public void JsonCodecWithoutMsgIoRoundTripMany() => MulticodecRoundTripMany(JsonCodec.CreateCodec(false));
 
-        [Test]
+        [Fact]
         public void ProtoBufMulticodecWithMsgIoRoundTripMany() => MulticodecRoundTripMany(ProtoBufCodec.CreateMulticodec(true));
 
-        [Test]
+        [Fact]
         public void ProtoBufMulticodecWithoutMsgIoRoundTripMany() => MulticodecRoundTripMany(ProtoBufCodec.CreateMulticodec(false));
 
-        [Test]
+        [Fact]
         public void ProtoBufCodecWithMsgIoRoundTripMany() => MulticodecRoundTripMany(ProtoBufCodec.CreateCodec(true));
 
-        [Test]
+        [Fact]
         public void ProtoBufCodecWithoutMsgIoRoundTripMany() => MulticodecRoundTripMany(ProtoBufCodec.CreateCodec(false));
 
-        [Test]
+        [Fact]
         public void CBORMulticodecRoundTripMany() => MulticodecRoundTripMany(CborCodec.CreateMulticodec());
 
-        [Test]
+        [Fact]
         public void CBORCodecRoundTripMany() => MulticodecRoundTripMany(CborCodec.CreateCodec());
 
-        [Test]
+        [Fact]
         public void MsgIoMulticodecRoundTripMany() => MsgIoRoundTripMany(MsgIoCodec.CreateMulticodec());
 
-        [Test]
+        [Fact]
         public void MsgIoCodecRoundTripMany() => MsgIoRoundTripMany(MsgIoCodec.CreateCodec());
 
 
-        [Test]
+        [Fact]
         public Task JsonMulticodecWithMsgIoRoundTripMany_Async() => MulticodecRoundTripManyAsync(JsonCodec.CreateMulticodec(true));
 
-        [Test]
+        [Fact]
         public Task JsonCodecWithMsgIoRoundTripMany_Async() => MulticodecRoundTripManyAsync(JsonCodec.CreateCodec(true));
 
-        [Test]
+        [Fact]
         public Task JsonMulticodecWithoutMsgIoRoundTripMany_Async() => MulticodecRoundTripManyAsync(JsonCodec.CreateMulticodec(false));
 
-        [Test]
+        [Fact]
         public Task JsonCodecWithoutMsgIoRoundTripMany_Async() => MulticodecRoundTripManyAsync(JsonCodec.CreateCodec(false));
 
-        [Test]
+        [Fact]
         public Task ProtoBufMulticodecWithMsgIoRoundTripMany_Async() => MulticodecRoundTripManyAsync(ProtoBufCodec.CreateMulticodec(true));
 
-        [Test]
+        [Fact]
         public Task ProtoBufMulticodecWithiutMsgIoRoundTripMany_Async() => MulticodecRoundTripManyAsync(ProtoBufCodec.CreateMulticodec(false));
 
-        [Test]
+        [Fact]
         public Task ProtoBufCodecWithMsgIoRoundTripMany_Async() => MulticodecRoundTripManyAsync(ProtoBufCodec.CreateCodec(true));
 
-        [Test]
+        [Fact]
         public Task ProtoBufCodecWithoutMsgIoRoundTripMany_Async() => MulticodecRoundTripManyAsync(ProtoBufCodec.CreateCodec(false));
 
-        [Test]
+        [Fact]
         public Task CBORMulticodecRoundTripMany_Async() => MulticodecRoundTripManyAsync(CborCodec.CreateMulticodec());
 
-        [Test]
+        [Fact]
         public Task CBORCodecRoundTripMany_Async() => MulticodecRoundTripManyAsync(CborCodec.CreateCodec());
 
-        [Test]
+        [Fact]
         public Task MsgIoMulticodecRoundTripMany_Async() => MsgIoRoundTripManyAsync(MsgIoCodec.CreateMulticodec());
 
-        [Test]
+        [Fact]
         public Task MsgIoCodecRoundTripMany_Async() => MsgIoRoundTripManyAsync(MsgIoCodec.CreateCodec());
 
 
@@ -319,14 +318,14 @@ namespace Multiformats.Codec.Tests
             return c;
         }
 
-        [Test]
+        [Fact]
         public void MuxCodecRoundTripsWrap()
         {
             var codec = RandomMux();
             MulticodecRoundTripMany(codec);
         }
 
-        [Test]
+        [Fact]
         public void MuxCodecRoundTripsNoWrap()
         {
             var codec = RandomMux();
