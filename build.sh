@@ -2,7 +2,7 @@
 
 set -e
 
-if [ $TRAVIS_OS_NAME = "osx" ]; then
+if [ "$TRAVIS_OS_NAME" == "osx" ]; then
   ulimit -n 1024
   dotnet restore --disable-parallel --runtime osx-x64
 else
