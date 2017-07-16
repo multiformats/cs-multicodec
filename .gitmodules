@@ -1,6 +1,6 @@
 [submodule "vendor/Numbers"]
 	path = vendor/Numbers
-	url = git@github.com:peteroupc/Numbers.git
+	url = https://github.com/peteroupc/Numbers.git
 [submodule "vendor/CBOR"]
 	path = vendor/CBOR
-	url = git@github.com:peteroupc/CBOR.git
+	url = https://github.com/peteroupc/CBOR.git
