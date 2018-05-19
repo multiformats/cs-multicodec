@@ -16,7 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
-		.gitmodules = .gitmodules
 		.travis.yml = .travis.yml
 		appveyor.yml = appveyor.yml
 		build.sh = build.sh
@@ -79,5 +78,8 @@ Global
 		{755C90D7-DBEB-4F65-AA39-B9E44EC36C69} = {EEDDEB88-106B-48E1-9CF9-B6FD59B9A77E}
 		{DBC8A249-27F2-42DF-BA8E-229EFC5C7EBB} = {EEDDEB88-106B-48E1-9CF9-B6FD59B9A77E}
 		{AF22E914-C39F-44B5-8D0A-41B41051955D} = {138E102A-A632-4237-BEFE-B1C2138F1455}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {36EC6CAA-AB05-46A8-9187-50F7E7A924DD}
 	EndGlobalSection
 EndGlobal
