@@ -1,6 +1,0 @@
-[submodule "vendor/Numbers"]
-	path = vendor/Numbers
-	url = https://github.com/peteroupc/Numbers.git
-[submodule "vendor/CBOR"]
-	path = vendor/CBOR
-	url = https://github.com/peteroupc/CBOR.git
