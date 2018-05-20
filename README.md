@@ -52,7 +52,7 @@ Small note: If editing the README, please conform to the [standard-readme](https
 
 ## License
 
-[MIT](LICENSE) © 2017 Trond Bråthen
+[MIT](LICENSE) © 2018 Trond Bråthen
 
 * [PeterO.Numbers](https://github.com/peteroupc/Numbers) © 2017 Peter O.
 * [PeterO.CBOR](https://github.com/peteroupc/CBOR) © 2017 Peter O.
