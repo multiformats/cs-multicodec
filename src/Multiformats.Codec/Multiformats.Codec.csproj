@@ -3,9 +3,9 @@
     <TargetFrameworks>netstandard1.6;net461</TargetFrameworks>
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
     <Description>Multiformat codecs</Description>
-    <Copyright>Copyright © tabrath 2017</Copyright>
+    <Copyright>Copyright © tabrath 2018</Copyright>
     <AssemblyTitle>Multiformats.Codec</AssemblyTitle>
-    <VersionPrefix>1.1.1</VersionPrefix>
+    <VersionPrefix>1.1.2</VersionPrefix>
     <Authors>tabrath</Authors>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AssemblyName>Multiformats.Codec</AssemblyName>
