@@ -4,6 +4,7 @@ environment:
 version: ${PKG_VERSION}-{build}
 configuration: Release
 platform: x64
+image: Visual Studio 2017
 
 skip_commits:
   message: /chore/
@@ -37,9 +38,6 @@ init:
   - ps: Update-AppveyorBuild -Version $env:BUILD_VERSION
   - ps: Write-Host "Build version $env:BUILD_VERSION, NuGet version $env:NUGET_VERSION, Version suffix $env:VERSION_SUFFIX"
 
-install:
-  - git submodule update --init --recursive
-
 before_build:
   - appveyor-retry dotnet restore -v Minimal
 
@@ -67,11 +65,8 @@ after_build:
 
 test: off
 
-before_test:
-  - nuget install OpenCover -Version 4.6.519 -OutputDirectory .\tools
-
 test_script:
-  - .\tools\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -returntargetcode -target:"%ProgramFiles%\dotnet\dotnet.exe" -targetargs:"test %APPVEYOR_BUILD_FOLDER%\test\Multiformats.Codec.Tests\Multiformats.Codec.Tests.csproj -c Release -f netcoreapp1.1 -l trx;logfilename=TestResult.xml /p:Platform=anycpu" -filter:"+[Multiformats.Codec]* -[Multiformats.Codec.Benchmarks]* -[Multiformats.Codec.Tests]*" -excludebyattribute:*.ExcludeFromCodeCoverage* -hideskipped:All -output:"%APPVEYOR_BUILD_FOLDER%\coverage.xml" -oldStyle
+  - dotnet test --configuration Debug --framework netcoreapp2.1 --logger trx;logfilename=TestResult.xml --results-directory "%APPVEYOR_BUILD_FOLDER%\test\Multiformats.Codec.Tests\TestResults" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover "%APPVEYOR_BUILD_FOLDER%\test\Multiformats.Codec.Tests\Multiformats.Codec.Tests.csproj"
 
 after_test:
   - ps: |
@@ -79,21 +74,15 @@ after_test:
         $wc.UploadFile("https://ci.appveyor.com/api/testresults/xunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\test\Multiformats.Codec.Tests\TestResults\TestResult.xml))
 
 on_success:
-  - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
-  - pip install codecov
-  - codecov -f "%APPVEYOR_BUILD_FOLDER%\coverage.xml" -X gcov
+  - choco install codecov
+  - codecov -f "%APPVEYOR_BUILD_FOLDER%\test\Multiformats.Codec.Tests\coverage.opencover.xml
 
 artifacts:
   - path: artifacts\**\*.*
 
 cache:
-  - '%USERPROFILE%\.local'
   - '%USERPROFILE%\.nuget\packages -> **\project.json'
   - '%LocalAppData%\NuGet\Cache'
-  - '%LocalAppData%\Python'
-  - '.\packages -> **\project.json'
-  - '.\tools'
-  - '\Python34'
 
 nuget:
   account_feed: true
