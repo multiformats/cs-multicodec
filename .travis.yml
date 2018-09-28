@@ -3,14 +3,14 @@ solution: Multiformats.Codec.sln
 
 matrix:
   include:
-    - dotnet: 2.1.300-preview2-008533
+    - dotnet: 2.1.402
       mono: none
       env: DOTNET=1 CLI_VERSION=latest
       os: linux
     - mono: latest
       env: MONO=1 CLI_VERSION=latest
       os: linux
-    - dotnet: 2.1.300-preview2-008533
+    - dotnet: 2.1.402
       mono: none
       env: DOTNET=1 CLI_VERSION=latest
       os: osx
