@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using Xunit;
 
 namespace Multiformats.Codec.Tests
@@ -7,10 +7,10 @@ namespace Multiformats.Codec.Tests
     {
         [Theory]
         [InlineData(MulticodecCode.Unknown, "<Unknown Multicodec>")]
-        [InlineData(MulticodecCode.Git, "git")]
+        [InlineData(MulticodecCode.GitRaw, "git-raw")]
         [InlineData(MulticodecCode.MerkleDAGProtobuf, "dag-pb")]
         [InlineData(MulticodecCode.MerkleDAGCBOR, "dag-cbor")]
-        [InlineData(MulticodecCode.Raw, "bin")]
+        [InlineData(MulticodecCode.Raw, "raw")]
         [InlineData(MulticodecCode.EthereumBlock, "eth-block")]
         [InlineData(MulticodecCode.EthereumTransaction, "eth-tx")]
         [InlineData(MulticodecCode.BitcoinBlock, "bitcoin-block")]
@@ -24,7 +24,7 @@ namespace Multiformats.Codec.Tests
 
         [Theory]
         [InlineData(0UL, MulticodecCode.Unknown)]
-        [InlineData(0x69UL, MulticodecCode.Git)]
+        [InlineData(0x78UL, MulticodecCode.GitRaw)]
         [InlineData(0x70UL, MulticodecCode.MerkleDAGProtobuf)]
         [InlineData(0x71UL, MulticodecCode.MerkleDAGCBOR)]
         [InlineData(0x55UL, MulticodecCode.Raw)]
@@ -40,7 +40,7 @@ namespace Multiformats.Codec.Tests
         }
 
         [Theory]
-        [InlineData(MulticodecCode.Git)]
+        [InlineData(MulticodecCode.GitRaw)]
         [InlineData(MulticodecCode.MerkleDAGProtobuf)]
         [InlineData(MulticodecCode.MerkleDAGCBOR)]
         [InlineData(MulticodecCode.Raw)]
@@ -64,8 +64,8 @@ namespace Multiformats.Codec.Tests
 
         [Theory]
         [InlineData(null)]
-        [InlineData(new byte[] {})]
-        [InlineData(new byte[] {255,255})]
+        [InlineData(new byte[] { })]
+        [InlineData(new byte[] { 255, 255 })]
         public void GivenInvalidCode_ReturnsUnknown(byte[] data)
         {
             var c = MulticodecPacked.GetCode(data);

@@ -5,7 +5,7 @@ namespace Multiformats.Codec
         // misc
         [StringValue("<Unknown Multicodec>")]
         Unknown = 0,
-        [StringValue("bin")]
+        [StringValue("raw")]
         Raw = 0x55,
 
         // bases
@@ -23,18 +23,25 @@ namespace Multiformats.Codec
         Base64Url,
 
         // serialization
-        CBOR,
+        CBOR = 0x51,
         [StringValue("bjson")]
         BinaryJson,
         [StringValue("ubjson")]
         UniversalBinaryJson,
         [StringValue("protobuf")]
-        ProtolBuffers,
+        ProtolBuffers = 0x50,
         [StringValue("capnp")]
         CapnProto,
         [StringValue("flatbuf")]
         FlatBuffers,
-        RLP = 0x60,
+        [StringValue("rlp")]
+        RecursiveLengthPrefix = 0x60,
+        [StringValue("msgpack")]
+        MessagePack,
+        [StringValue("binc")]
+        Binc,
+        [StringValue("bencode")]
+        Bencode = 0x63,
 
         // multiformats
         [StringValue("multicodec")]
@@ -60,8 +67,10 @@ namespace Multiformats.Codec
         IPFS = 0x2A,
         HTTP = 0x01E0,
         HTTPS = 0x01BB,
+        QUIC = 0x01CC,
         WS = 0x01DD,
         ONION = 0x01BC,
+        P2PCircuit = 0x0122,
 
         // archiving
         Tar,
@@ -76,12 +85,14 @@ namespace Multiformats.Codec
         Mkv,
 
         // IPLD
-        [StringValue("git")]
-        Git = 0x69,
+        [StringValue("git-raw")]
+        GitRaw = 0x78,
         [StringValue("dag-pb")]
         MerkleDAGProtobuf = 0x70,
         [StringValue("dag-cbor")]
         MerkleDAGCBOR = 0x71,
+        [StringValue("dag-json")]
+        MerkleDAGJSON = 0x129,
         [StringValue("eth-block")]
         EthereumBlock = 0x90,
         [StringValue("eth-block-list")]
@@ -108,5 +119,19 @@ namespace Multiformats.Codec
         ZcashBlock = 0xc0,
         [StringValue("zcash-tx")]
         ZcashTransaction = 0xc1,
+        [StringValue("stellar-block")]
+        StellarBlock = 0xd0,
+        [StringValue("stellar-tx")]
+        StellarTransaction = 0xd1,
+        [StringValue("decred-block")]
+        DecredBlock = 0xe0,
+        [StringValue("decred-tx")]
+        DecredTransaction = 0xe1,
+        [StringValue("torrent-info")]
+        TorrentInfo = 0x7b,
+        [StringValue("torrent-file")]
+        TorrentFile = 0x7c,
+        [StringValue("ed25519-pub")]
+        Ed25519PublicKey = 0xed,
     }
 }
