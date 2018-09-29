@@ -33,6 +33,22 @@ namespace Multiformats.Codec.Tests
             }
         }
 
+        [Serializable, ProtoBuf.ProtoContract]
+        public class NestedTestClass
+        {
+            [ProtoBuf.ProtoMember(1)]
+            public TestClass HelloOther { get; set; }
+
+            public override bool Equals(object obj)
+            {
+                var other = (NestedTestClass)obj;
+                if (other == null)
+                    return false;
+
+                return HelloOther?.Equals(other.HelloOther) ?? false;
+            }
+        }
+
         private void MulticodecRoundTrip(ICodec codec)
         {
             var test = new TestClass
@@ -48,6 +64,29 @@ namespace Multiformats.Codec.Tests
                 codec.Encoder(stream).Encode(test);
                 stream.Seek(0, SeekOrigin.Begin);
                 result = codec.Decoder(stream).Decode<TestClass>();
+            }
+
+            Assert.Equal(result, test);
+        }
+
+        private void MulticodecRoundTripNested(ICodec codec)
+        {
+            var test = new NestedTestClass
+            {
+                HelloOther = new TestClass
+                {
+                    HelloString = "Hello World",
+                    HelloInt = int.MaxValue,
+                    HelloBool = true
+                }
+            };
+            NestedTestClass result;
+
+            using (var stream = new MemoryStream())
+            {
+                codec.Encoder(stream).Encode(test);
+                stream.Seek(0, SeekOrigin.Begin);
+                result = codec.Decoder(stream).Decode<NestedTestClass>();
             }
 
             Assert.Equal(result, test);
@@ -73,6 +112,29 @@ namespace Multiformats.Codec.Tests
             Assert.Equal(result, test);
         }
 
+        private async Task MulticodecRoundTripNestedAsync(ICodec codec)
+        {
+            var test = new NestedTestClass
+            {
+                HelloOther = new TestClass
+                {
+                    HelloString = "Hello World",
+                    HelloInt = int.MaxValue,
+                    HelloBool = true
+                }
+            };
+            NestedTestClass result;
+
+            using (var stream = new MemoryStream())
+            {
+                await codec.Encoder(stream).EncodeAsync(test, CancellationToken.None);
+                stream.Seek(0, SeekOrigin.Begin);
+                result = await codec.Decoder(stream).DecodeAsync<NestedTestClass>(CancellationToken.None);
+            }
+
+            Assert.Equal(result, test);
+        }
+
         [Fact]
         public void JsonMulticodecWithMsgIoRoundTrip() => MulticodecRoundTrip(JsonCodec.CreateMulticodec(true));
 
@@ -92,6 +154,12 @@ namespace Multiformats.Codec.Tests
         public void CBORCodecRoundTrip() => MulticodecRoundTrip(CborCodec.CreateCodec());
 
         [Fact]
+        public void CBORMulticodecRoundTripNested() => MulticodecRoundTripNested(CborCodec.CreateMulticodec());
+
+        [Fact]
+        public void CBORCodecRoundTripNested() => MulticodecRoundTripNested(CborCodec.CreateCodec());
+
+        [Fact]
         public Task JsonMulticodecWithMsgIoRoundTrip_Async() => MulticodecRoundTripAsync(JsonCodec.CreateMulticodec(true));
 
         [Fact]
@@ -109,6 +177,11 @@ namespace Multiformats.Codec.Tests
         [Fact]
         public Task CBORCodecRoundTrip_Async() => MulticodecRoundTripAsync(CborCodec.CreateCodec());
 
+        [Fact]
+        public Task CBORMulticodecRoundTripNested_Async() => MulticodecRoundTripNestedAsync(CborCodec.CreateMulticodec());
+
+        [Fact]
+        public Task CBORCodecRoundTripNested_Async() => MulticodecRoundTripNestedAsync(CborCodec.CreateCodec());
 
         private void MulticodecRoundTripMany(ICodec codec, int count = 1000)
         {
@@ -157,6 +230,35 @@ namespace Multiformats.Codec.Tests
                 var dec = codec.Decoder(stream);
                 for (var i = 0; i < tests.Length; i++)
                     results.Add(await dec.DecodeAsync<TestClass>(CancellationToken.None));
+            }
+
+            Assert.Equal(results.ToArray(), tests);
+        }
+
+        private async Task MulticodecRoundTripManyNestedAsync(ICodec codec, int count = 1000)
+        {
+            var tests = Enumerable.Range(0, count).Select(i => new NestedTestClass
+            {
+                HelloOther = new TestClass
+                {
+                    HelloString = "Hello World",
+                    HelloInt = int.MaxValue,
+                    HelloBool = true
+                }
+            }).ToArray();
+            var results = new List<NestedTestClass>();
+
+            using (var stream = new MemoryStream())
+            {
+                var enc = codec.Encoder(stream);
+                foreach (var test in tests)
+                {
+                    await enc.EncodeAsync(test, CancellationToken.None);
+                }
+                stream.Seek(0, SeekOrigin.Begin);
+                var dec = codec.Decoder(stream);
+                for (var i = 0; i < tests.Length; i++)
+                    results.Add(await dec.DecodeAsync<NestedTestClass>(CancellationToken.None));
             }
 
             Assert.Equal(results.ToArray(), tests);
@@ -284,6 +386,12 @@ namespace Multiformats.Codec.Tests
 
         [Fact]
         public Task CBORCodecRoundTripMany_Async() => MulticodecRoundTripManyAsync(CborCodec.CreateCodec());
+
+        [Fact]
+        public Task CBORMulticodecRoundTripManyNested_Async() => MulticodecRoundTripManyNestedAsync(CborCodec.CreateMulticodec());
+
+        [Fact]
+        public Task CBORCodecRoundTripManyNested_Async() => MulticodecRoundTripManyNestedAsync(CborCodec.CreateCodec());
 
         [Fact]
         public Task MsgIoMulticodecRoundTripMany_Async() => MsgIoRoundTripManyAsync(MsgIoCodec.CreateMulticodec());

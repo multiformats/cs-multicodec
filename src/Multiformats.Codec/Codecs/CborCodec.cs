@@ -2,7 +2,6 @@
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using PeterO.Cbor;
 
 namespace Multiformats.Codec.Codecs
@@ -42,8 +41,7 @@ namespace Multiformats.Codec.Codecs
                 if (_codec._multicodec)
                     _stream.Write(_codec.Header, 0, _codec.Header.Length);
 
-                var json = JsonConvert.SerializeObject(obj, Formatting.None);
-                var cbor = CBORObject.FromJSONString(json); //FromObject(obj);
+                var cbor = CBORObject.FromObject(obj);
                 cbor.WriteTo(_stream);
                 _stream.Flush();
             }
@@ -56,8 +54,7 @@ namespace Multiformats.Codec.Codecs
                 if (_codec._multicodec)
                     await _stream.WriteAsync(_codec.Header, 0, _codec.Header.Length, cancellationToken);
 
-                var json = JsonConvert.SerializeObject(obj, Formatting.None);
-                var cbor = CBORObject.FromJSONString(json); //FromObject(obj);
+                var cbor = CBORObject.FromObject(obj);
 
                 cbor.WriteTo(_stream);
                 await _stream.FlushAsync(cancellationToken);
@@ -82,8 +79,7 @@ namespace Multiformats.Codec.Codecs
                 if (_codec._multicodec)
                     Multicodec.ConsumeHeader(_stream, _codec.Header);
 
-                var cbor = CBORObject.Read(_stream);
-                return JsonConvert.DeserializeObject<T>(cbor.ToJSONString());
+                return CBORObject.Read(_stream).ToObject<T>();
             }
 
             public async Task<T> DecodeAsync<T>(CancellationToken cancellationToken)
@@ -91,8 +87,7 @@ namespace Multiformats.Codec.Codecs
                 if (_codec._multicodec)
                     await Multicodec.ConsumeHeaderAsync(_stream, _codec.Header, cancellationToken);
 
-                var cbor = CBORObject.Read(_stream);
-                return JsonConvert.DeserializeObject<T>(cbor.ToJSONString());
+                return CBORObject.Read(_stream).ToObject<T>();
             }
         }
     }
