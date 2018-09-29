@@ -78,7 +78,7 @@ namespace Multiformats.Codec.Codecs
                 subcodec.Encoder(_stream).Encode(obj);
             }
 
-            public async Task EncodeAsync<T>(T obj, CancellationToken cancellationToken)
+            public async Task EncodeAsync<T>(T obj, CancellationToken cancellationToken = default(CancellationToken))
             {
                 var subcodec = _codec.GetCodec(obj);
                 if (subcodec == null)
@@ -123,7 +123,7 @@ namespace Multiformats.Codec.Codecs
                 return subcodec.Decoder(_stream).Decode<T>();
             }
 
-            public async Task<T> DecodeAsync<T>(CancellationToken cancellationToken)
+            public async Task<T> DecodeAsync<T>(CancellationToken cancellationToken = default(CancellationToken))
             {
                 if (_codec.Wrap)
                     await Multicodec.ConsumeHeaderAsync(_stream, _codec.Header, cancellationToken);

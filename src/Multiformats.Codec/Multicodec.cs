@@ -54,7 +54,7 @@ namespace Multiformats.Codec
             return buf;
         }
 
-        public static async Task<byte[]> ReadHeaderAsync(Stream stream, CancellationToken cancellationToken)
+        public static async Task<byte[]> ReadHeaderAsync(Stream stream, CancellationToken cancellationToken = default(CancellationToken))
         {
             var length = await stream.ReadByteAsync(cancellationToken);
             if (length > 127)
@@ -86,7 +86,7 @@ namespace Multiformats.Codec
             return buf;
         }
 
-        public static async Task<byte[]> PeekHeaderAsync(Stream stream, CancellationToken cancellationToken)
+        public static async Task<byte[]> PeekHeaderAsync(Stream stream, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (!stream.CanSeek)
                 throw new Exception("Stream does not support peeking");
@@ -121,7 +121,7 @@ namespace Multiformats.Codec
                 throw new Exception("Mismatch");
         }
 
-        public static async Task ConsumeHeaderAsync(Stream stream, byte[] header, CancellationToken cancellationToken)
+        public static async Task ConsumeHeaderAsync(Stream stream, byte[] header, CancellationToken cancellationToken = default(CancellationToken))
         {
             var actual = new byte[header.Length];
             if (await stream.ReadAsync(actual, 0, actual.Length, cancellationToken) != actual.Length)

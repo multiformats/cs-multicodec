@@ -65,7 +65,7 @@ namespace Multiformats.Codec.Codecs
                 _stream.Flush();
             }
 
-            public async Task EncodeAsync<T>(T obj, CancellationToken cancellationToken)
+            public async Task EncodeAsync<T>(T obj, CancellationToken cancellationToken = default(CancellationToken))
             {
                 if (_codec._multicodec)
                     await _stream.WriteAsync(_codec.Header, 0, _codec.Header.Length, cancellationToken);
@@ -114,7 +114,7 @@ namespace Multiformats.Codec.Codecs
                 return ProtoBuf.Serializer.DeserializeWithLengthPrefix<T>(_stream, PrefixStyle.Fixed32BigEndian);
             }
 
-            public async Task<T> DecodeAsync<T>(CancellationToken cancellationToken)
+            public async Task<T> DecodeAsync<T>(CancellationToken cancellationToken = default(CancellationToken))
             {
                 if (_codec._multicodec)
                     await Multicodec.ConsumeHeaderAsync(_stream, _codec.Header, cancellationToken);

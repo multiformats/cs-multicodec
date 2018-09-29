@@ -20,16 +20,16 @@ namespace Multiformats.Codec
                 stream.Flush();
         }
 
-        public static async Task WriteMessageAsync(Stream stream, byte[] bytes, int offset = 0, int count = 0, bool flush = false, CancellationToken? cancellationToken = null)
+        public static async Task WriteMessageAsync(Stream stream, byte[] bytes, int offset = 0, int count = 0, bool flush = false, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (count == 0)
                 count = bytes.Length - offset;
 
-            await Binary.BigEndian.WriteAsync(stream, (uint)count);
+            await Binary.BigEndian.WriteAsync(stream, (uint)count, cancellationToken);
 
-            await stream.WriteAsync(bytes, offset, count, cancellationToken ?? CancellationToken.None);
+            await stream.WriteAsync(bytes, offset, count, cancellationToken);
             if (flush)
-                await stream.FlushAsync(cancellationToken ?? CancellationToken.None);
+                await stream.FlushAsync(cancellationToken);
         }
 
         public static byte[] ReadMessage(Stream stream)
@@ -45,9 +45,9 @@ namespace Multiformats.Codec
             return bytes;
         }
 
-        public static async Task<byte[]> ReadMessageAsync(Stream stream, CancellationToken cancellationToken)
+        public static async Task<byte[]> ReadMessageAsync(Stream stream, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var len = await Binary.BigEndian.ReadUInt32Async(stream);
+            var len = await Binary.BigEndian.ReadUInt32Async(stream, cancellationToken);
             if (len == 0)
                 throw new EndOfStreamException();
 

@@ -14,7 +14,7 @@ namespace Multiformats.Codec
             return result;
         }
 
-        public static async Task<byte> ReadByteAsync(this Stream stream, CancellationToken cancellationToken)
+        public static async Task<byte> ReadByteAsync(this Stream stream, CancellationToken cancellationToken = default(CancellationToken))
         {
             var buffer = new byte[1];
             return await stream.ReadAsync(buffer, 0, 1, cancellationToken) == 1 ? buffer[0] : (byte)0;
