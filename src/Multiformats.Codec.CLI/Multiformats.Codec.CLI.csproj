@@ -1,29 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1;net461</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.1;net461</TargetFrameworks>
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
-    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">portable-net45+win8</PackageTargetFallback>
-    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'net461' ">$(PackageTargetFallback);netstandard;portable-net461+win8</PackageTargetFallback>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <OutputType>Exe</OutputType>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <DefineConstants>$(DefineConstants)</DefineConstants>
   </PropertyGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-    <PackageReference Include="Microsoft.CSharp" Version="4.3.0" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Multiformats.Codec\Multiformats.Codec.csproj" />
