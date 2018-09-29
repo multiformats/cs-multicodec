@@ -57,7 +57,7 @@ namespace Multiformats.Codec.Codecs
                 }
             }
 
-            public async Task EncodeAsync<T>(T obj, CancellationToken cancellationToken)
+            public async Task EncodeAsync<T>(T obj, CancellationToken cancellationToken = default(CancellationToken))
             {
                 if (_codec._multicodec)
                     await _stream.WriteAsync(_codec.Header, 0, _codec.Header.Length, cancellationToken);
@@ -107,7 +107,7 @@ namespace Multiformats.Codec.Codecs
 
             }
 
-            public async Task<T> DecodeAsync<T>(CancellationToken cancellationToken)
+            public async Task<T> DecodeAsync<T>(CancellationToken cancellationToken = default(CancellationToken))
             {
                 if (_codec._multicodec)
                     await Multicodec.ConsumeHeaderAsync(_stream, _codec.Header, cancellationToken);
@@ -138,7 +138,7 @@ namespace Multiformats.Codec.Codecs
                 return Encoding.UTF8.GetString(buffer.Slice(0, offset)).Trim();
             }
 
-            private static async Task<string> ReadLineAsync(Stream stream, CancellationToken cancellationToken)
+            private static async Task<string> ReadLineAsync(Stream stream, CancellationToken cancellationToken = default(CancellationToken))
             {
                 var n = 0;
                 var buffer = new byte[4096];

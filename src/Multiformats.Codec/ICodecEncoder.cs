@@ -6,6 +6,6 @@ namespace Multiformats.Codec
     public interface ICodecEncoder
     {
         void Encode<T>(T obj);
-        Task EncodeAsync<T>(T obj, CancellationToken cancellationToken);
+        Task EncodeAsync<T>(T obj, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

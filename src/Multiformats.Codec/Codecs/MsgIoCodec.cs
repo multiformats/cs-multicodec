@@ -48,7 +48,7 @@ namespace Multiformats.Codec.Codecs
                 MessageIo.WriteMessage(_stream, bytes, flush: true);
             }
 
-            public async Task EncodeAsync<T>(T obj, CancellationToken cancellationToken)
+            public async Task EncodeAsync<T>(T obj, CancellationToken cancellationToken = default(CancellationToken))
             {
                 var bytes = (byte[])(object)obj;
                 if (bytes == null)
@@ -84,7 +84,7 @@ namespace Multiformats.Codec.Codecs
                 return (T)(object)bytes;
             }
 
-            public async Task<T> DecodeAsync<T>(CancellationToken cancellationToken)
+            public async Task<T> DecodeAsync<T>(CancellationToken cancellationToken = default(CancellationToken))
             {
                 if (_codec._multicodec)
                     await Multicodec.ConsumeHeaderAsync(_stream, _codec.Header, cancellationToken);
