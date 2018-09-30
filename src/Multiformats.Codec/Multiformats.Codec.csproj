@@ -41,4 +41,23 @@
     <PackageReference Include="PeterO.Numbers" Version="1.1.2" />
     <PackageReference Include="protobuf-net" Version="2.4.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="MulticodecCodeMultihash.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MulticodecCodeMultihash.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="MulticodecCodeMultihash.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MulticodecCodeMultihash.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

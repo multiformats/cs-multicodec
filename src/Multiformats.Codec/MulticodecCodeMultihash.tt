@@ -1,0 +1,36 @@
+﻿﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+namespace Multiformats.Codec
+{
+    public partial struct MulticodecCode
+	{
+		// blake2b
+<# for (int i = 8; i <= 512; i += 8) { #>
+		public static readonly MulticodecCode BLAKE2B_<#= i #> = new MulticodecCode("blake2b-<#= i #>", "blake2b-<#= i #>", <#= string.Format("0x{0:x}", 45569 + (i / 8) - 1) #>);
+<# } #>
+
+		// blake2s
+<# for (int i = 8; i <= 256; i += 8) { #>
+		public static readonly MulticodecCode BLAKE2S_<#= i #> = new MulticodecCode("blake2s-<#= i #>", "blake2s-<#= i #>", <#= string.Format("0x{0:x}", 45633 + (i / 8) - 1) #>);
+<# } #>
+
+		// skein
+<#
+	var skeinIndex = 0;
+	for (int bits = 256; bits <= 1024; bits *= 2)
+	{
+		for (int length = 8; length <= bits; length += 8)
+		{
+#>
+		public static readonly MulticodecCode SKEIN<#= bits #>_<#= length #> = new MulticodecCode("skein<#= bits #>-<#= length #>", "skein<#= bits #>-<#= length #>", <#= string.Format("0x{0:x}", 45825 + skeinIndex++) #>);
+<#
+		}
+	}
+#>
+
+	}
+}
