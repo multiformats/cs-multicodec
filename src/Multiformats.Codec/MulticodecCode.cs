@@ -91,6 +91,8 @@ namespace Multiformats.Codec
         MerkleDAGProtobuf = 0x70,
         [StringValue("dag-cbor")]
         MerkleDAGCBOR = 0x71,
+        [StringValue("libp2p-key")]
+        Libp2pKey = 0x72,
         [StringValue("dag-json")]
         MerkleDAGJSON = 0x129,
         [StringValue("eth-block")]
