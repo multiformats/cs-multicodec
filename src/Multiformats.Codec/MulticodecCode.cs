@@ -71,7 +71,6 @@ namespace Multiformats.Codec
         WS = 0x01DD,
         ONION = 0x01BC,
         P2PCircuit = 0x0122,
-
         // archiving
         Tar,
         Zip,
@@ -133,5 +132,7 @@ namespace Multiformats.Codec
         TorrentFile = 0x7c,
         [StringValue("ed25519-pub")]
         Ed25519PublicKey = 0xed,
+        [StringValue("libp2p-key")]
+        LIB2P = 0x72
     }
 }

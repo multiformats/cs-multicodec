@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.6;net461</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;net6.0</TargetFrameworks>
     <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
     <Description>Multiformat codecs</Description>
     <Copyright>Copyright © tabrath 2018</Copyright>
@@ -34,11 +34,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BinaryEncoding" Version="1.4.0" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="PeterO.Cbor" Version="3.4.0-alpha1" />
-    <PackageReference Include="PeterO.Numbers" Version="1.1.2" />
-    <PackageReference Include="protobuf-net" Version="2.4.0" />
+    <PackageReference Include="BinaryEncoding" Version="1.5.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="PeterO.Cbor" Version="4.5.2" />
+    <PackageReference Include="PeterO.Numbers" Version="1.8.2" />
+    <PackageReference Include="protobuf-net" Version="3.1.22" />
   </ItemGroup>
 </Project>
